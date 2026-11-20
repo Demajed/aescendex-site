@@ -1,0 +1,4 @@
+# Netlify settings for aescendexco.com
+[build]
+  publish = "public"              # only this folder is public
+  functions = "netlify/functions" # offers live here, served only to approved users

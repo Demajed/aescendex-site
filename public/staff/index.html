@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Staff Portal · Aescendex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#08080c;--card:#11111a;--body:#d9d9e3;--muted:#9a9aab;--line:#2a2a36;--pink:#ff45b5;--cyan:#00e5ff}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--body);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:30px 20px 70px}
+  .acct{display:flex;justify-content:flex-end;align-items:center;gap:14px;font-size:13px;color:var(--muted);margin-bottom:14px;min-height:20px}
+  .acct a,.acct button{font:inherit;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);background:none;border:0;cursor:pointer;text-decoration:none;padding:0}
+  .acct button{color:var(--muted)} .acct button:hover{color:#fff}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+  .logo{width:60px;height:58px;mix-blend-mode:lighten}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);margin:0 0 6px}
+  h1{font-family:"Cinzel",Georgia,serif;font-size:clamp(28px,5vw,40px);margin:0;color:#fff;line-height:1.05}
+  h1 span{color:var(--pink)}
+  h2{font-family:"Cinzel",Georgia,serif;color:#fff;font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+  section{border:2px solid var(--line);border-radius:16px;background:var(--card);padding:22px;margin-bottom:22px}
+  section.owner{border-color:var(--pink)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .tab{font:inherit;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 13px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--body);cursor:pointer}
+  .tab.on{background:var(--cyan);border-color:var(--cyan);color:#06060a}
+  .tab .n{opacity:.7;margin-left:4px}
+  input[type=search],input[type=email]{width:100%;font:inherit;font-size:15px;color:#fff;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);outline:none}
+  input:focus{border-color:var(--cyan)}
+  .rows{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+  .row{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+  .av{width:38px;height:38px;border-radius:50%;background:#22222e;flex:none;object-fit:cover;display:grid;place-items:center;color:var(--muted);font-weight:700}
+  .who{flex:1;min-width:0}
+  .who b{display:block;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .who span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acts{display:flex;gap:8px;flex:none}
+  .btn{font:inherit;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;border-radius:9px;border:2px solid transparent;cursor:pointer}
+  .btn:disabled{opacity:.5;cursor:wait}
+  .ok{background:var(--cyan);color:#06060a}
+  .no{background:transparent;border-color:var(--pink);color:var(--pink)}
+  .ghost{background:transparent;border-color:var(--line);color:var(--body)}
+  .empty{color:var(--muted);text-align:center;padding:22px 0;font-size:14px}
+  .addrow{display:flex;gap:10px;margin-top:6px}
+  .addrow input{flex:1}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);border:1px solid var(--pink);padding:3px 8px;border-radius:6px}
+  .msg{font-size:13px;color:var(--pink);margin-top:8px;min-height:18px}
+  .gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px}
+  .gate[hidden]{display:none}
+  .gate-card{max-width:440px;width:100%;text-align:center;border:2px solid var(--line);border-radius:18px;background:var(--card);padding:38px 30px}
+  .gate-card img{width:70px;height:68px;mix-blend-mode:lighten}
+  .gate-card h2{font-size:26px;margin:14px 0 12px}
+  .gate-card p{font-size:15px;line-height:1.6;margin:0 0 22px}
+  .gbtn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-weight:700;font-size:15px;background:#fff;color:#1f1f1f;border:0;border-radius:10px;padding:13px 20px;cursor:pointer}
+  .gbtn svg{width:18px;height:18px}
+  .linkbtn{display:block;margin:16px auto 0;font:inherit;font-size:13px;color:var(--muted);background:none;border:0;cursor:pointer;text-decoration:underline}
+  .spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--cyan);border-radius:50%;margin:10px auto 18px;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (max-width:600px){.row{flex-wrap:wrap}.acts{width:100%}.acts .btn{flex:1}}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <img src="/assets/logo.png" alt="Aescendex">
+    <h2 id="gate-title">Loading…</h2>
+    <div class="spinner" id="gate-spin"></div>
+    <p id="gate-text"></p>
+    <button class="gbtn" id="gate-signin" hidden>
+      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+      Sign in with Google
+    </button>
+    <button class="linkbtn" id="gate-out" hidden>Use a different account</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="acct" id="acct"></div>
+  <header>
+    <img class="logo" src="/assets/logo.png" alt="Aescendex">
+    <div>
+      <p class="eyebrow">Staff Portal</p>
+      <h1>Student <span>Access</span></h1>
+    </div>
+  </header>
+
+  <section>
+    <h2>Students</h2>
+    <p class="sub">Students sign in with Google on the job board. Approve them here to unlock the offers.</p>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-t="pending">Waiting<span class="n" id="n-pending">0</span></button>
+      <button class="tab" data-t="approved">Approved<span class="n" id="n-approved">0</span></button>
+      <button class="tab" data-t="removed">Removed<span class="n" id="n-removed">0</span></button>
+    </div>
+    <input type="search" id="q" placeholder="Search by name or email…" aria-label="Search students">
+    <div class="rows" id="students"></div>
+  </section>
+
+  <section class="owner" id="owner" hidden>
+    <h2>Staff</h2>
+    <p class="sub">Only you, the owner, can see this. Staff can approve and remove students. They sign in with the Google account for the email you add.</p>
+    <div class="addrow">
+      <input type="email" id="staff-email" placeholder="staffmember@gmail.com" aria-label="Staff email">
+      <button class="btn ok" id="staff-add">Add staff</button>
+    </div>
+    <div class="msg" id="staff-msg"></div>
+    <div class="rows" id="staff"></div>
+  </section>
+</div>
+
+<script type="module">
+import { configured, auth, db, onAuthStateChanged, googleSignIn, logOut, isOwner, isStaff, OWNER_EMAIL, esc } from "/assets/auth.js";
+import { collection, getDocs, doc, updateDoc, setDoc, deleteDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const $ = (id) => document.getElementById(id);
+let me = null, users = [], staffList = [], tab = "pending";
+
+function gate({ title, text = "", signin = false, out = false, spin = false }) {
+  $("gate").hidden = false;
+  $("gate-title").textContent = title;
+  $("gate-text").textContent = text; $("gate-text").hidden = !text;
+  $("gate-signin").hidden = !signin; $("gate-out").hidden = !out; $("gate-spin").hidden = !spin;
+}
+$("gate-signin").onclick = async () => {
+  try { await googleSignIn(); }
+  catch (e) { if (e?.code !== "auth/popup-closed-by-user") gate({ title: "Sign-in didn't work", text: "Please allow pop-ups for this site and try again.", signin: true }); }
+};
+$("gate-out").onclick = () => logOut();
+
+const when = (ts) => ts?.toDate ? ts.toDate().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "";
+const avatar = (u) => u.photo ? `<img class="av" src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">`
+  : `<div class="av">${esc((u.name || u.email || "?")[0].toUpperCase())}</div>`;
+
+async function load() {
+  const [uSnap, sSnap] = await Promise.all([getDocs(collection(db, "users")), getDocs(collection(db, "staff"))]);
+  staffList = sSnap.docs.map((d) => ({ email: d.id, ...d.data() }));
+  const staffEmails = new Set([OWNER_EMAIL.toLowerCase(), ...staffList.map((s) => s.email)]);
+  users = uSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+    .filter((u) => !staffEmails.has(String(u.email).toLowerCase()))
+    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  renderStudents(); renderStaff();
+}
+
+function renderStudents() {
+  for (const t of ["pending", "approved", "removed"]) $("n-" + t).textContent = users.filter((u) => (u.status || "pending") === t).length;
+  const q = $("q").value.trim().toLowerCase();
+  const list = users.filter((u) => (u.status || "pending") === tab && (!q || `${u.name} ${u.email}`.toLowerCase().includes(q)));
+  const btns = {
+    pending: (u) => `<button class="btn ok" data-a="approved" data-id="${u.id}">Approve</button><button class="btn no" data-a="removed" data-id="${u.id}">Deny</button>`,
+    approved: (u) => `<button class="btn no" data-a="removed" data-id="${u.id}">Remove</button>`,
+    removed: (u) => `<button class="btn ghost" data-a="approved" data-id="${u.id}">Restore</button>`,
+  };
+  const label = { pending: "Signed up", approved: "Signed up", removed: "Signed up" };
+  $("students").innerHTML = list.length ? list.map((u) => `
+    <div class="row">${avatar(u)}
+      <div class="who"><b>${esc(u.name || u.email)}</b><span>${esc(u.email)}${u.createdAt ? " · " + label[tab] + " " + when(u.createdAt) : ""}${u.reviewedBy ? " · by " + esc(u.reviewedBy) : ""}</span></div>
+      <div class="acts">${btns[tab](u)}</div>
+    </div>`).join("")
+    : `<div class="empty">${{ pending: "No one is waiting for approval.", approved: "No approved students yet.", removed: "No removed students." }[tab]}</div>`;
+}
+
+function renderStaff() {
+  if (!isOwner(me)) return;
+  $("staff").innerHTML = `
+    <div class="row"><div class="av">★</div><div class="who"><b>${esc(OWNER_EMAIL)}</b><span>Owner</span></div><span class="tag">Owner</span></div>` +
+    staffList.map((s) => `
+    <div class="row"><div class="av">${esc(s.email[0].toUpperCase())}</div>
+      <div class="who"><b>${esc(s.email)}</b><span>Staff${s.addedAt ? " · added " + when(s.addedAt) : ""}</span></div>
+      <div class="acts"><button class="btn no" data-staff-remove="${esc(s.email)}">Remove</button></div>
+    </div>`).join("");
+}
+
+$("tabs").onclick = (e) => {
+  const b = e.target.closest(".tab"); if (!b) return;
+  tab = b.dataset.t;
+  document.querySelectorAll(".tab").forEach((x) => x.classList.toggle("on", x === b));
+  renderStudents();
+};
+$("q").oninput = renderStudents;
+
+$("students").onclick = async (e) => {
+  const b = e.target.closest("button[data-a]"); if (!b) return;
+  b.disabled = true;
+  try {
+    await updateDoc(doc(db, "users", b.dataset.id), { status: b.dataset.a, reviewedBy: me.email, reviewedAt: serverTimestamp() });
+    const u = users.find((x) => x.id === b.dataset.id); if (u) { u.status = b.dataset.a; u.reviewedBy = me.email; }
+    renderStudents();
+  } catch (err) { console.error(err); b.disabled = false; alertBox("That didn't save. Refresh and try again."); }
+};
+
+$("staff-add").onclick = async () => {
+  const email = $("staff-email").value.trim().toLowerCase();
+  $("staff-msg").textContent = "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $("staff-msg").textContent = "Enter a valid email address."; return; }
+  if (email === OWNER_EMAIL.toLowerCase() || staffList.some((s) => s.email === email)) { $("staff-msg").textContent = "That person already has staff access."; return; }
+  $("staff-add").disabled = true;
+  try {
+    await setDoc(doc(db, "staff", email), { addedBy: me.email, addedAt: serverTimestamp() });
+    $("staff-email").value = "";
+    await load();
+  } catch (err) { console.error(err); $("staff-msg").textContent = "Couldn't add staff. Refresh and try again."; }
+  $("staff-add").disabled = false;
+};
+$("staff").onclick = async (e) => {
+  const b = e.target.closest("button[data-staff-remove]"); if (!b) return;
+  b.disabled = true;
+  try { await deleteDoc(doc(db, "staff", b.dataset.staffRemove)); await load(); }
+  catch (err) { console.error(err); b.disabled = false; $("staff-msg").textContent = "Couldn't remove staff. Refresh and try again."; }
+};
+function alertBox(t) { $("students").insertAdjacentHTML("afterbegin", `<div class="msg">${esc(t)}</div>`); }
+
+if (!configured) {
+  gate({ title: "Almost ready", text: "The staff portal is being set up." });
+} else {
+  onAuthStateChanged(auth, async (user) => {
+    me = user; $("acct").innerHTML = "";
+    if (!user) { gate({ title: "Staff sign-in", text: "Sign in with the Google account for your staff email.", signin: true }); return; }
+    gate({ title: "Checking your access…", spin: true });
+    try {
+      if (!(await isStaff(user))) {
+        gate({ title: "Staff only", text: `${user.email} doesn't have staff access. Ask the owner to add you.`, out: true });
+        return;
+      }
+      $("acct").innerHTML = `<span>${esc(user.email)}</span><a href="/jobs/">Job board</a><button id="acct-out">Sign out</button>`;
+      $("acct-out").onclick = () => logOut();
+      $("owner").hidden = !isOwner(user);
+      await load();
+      $("gate").hidden = true;
+    } catch (err) {
+      console.error(err);
+      gate({ title: "Something went wrong", text: "We couldn't load the staff portal. Refresh the page to try again.", out: true });
+    }
+  });
+}
+</script>
+</body>
+</html>
