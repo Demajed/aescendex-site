@@ -1,7 +1,7 @@
 // Returns the offers only to signed-in users who are approved students, staff, or the owner.
 // The user's Firebase ID token is checked by asking Firestore (which rejects invalid tokens)
 // for the user's own record, so no secret keys are needed here.
-import { OFFERS } from "./offers-data.mjs";
+import { OFFERS, INDUSTRIES } from "./offers-data.mjs";
 import { PROJECT_ID, OWNER_EMAIL } from "./config.mjs";
 
 const json = (body, status = 200) =>
@@ -48,7 +48,7 @@ export default async (req) => {
   }
 
   if (staff || status === "approved") {
-    return json({ status: "approved", staff, owner: verified && email === OWNER_EMAIL.toLowerCase(), offers: OFFERS });
+    return json({ status: "approved", staff, owner: verified && email === OWNER_EMAIL.toLowerCase(), offers: OFFERS, industries: INDUSTRIES });
   }
   return json({ status }, 403);
 };
